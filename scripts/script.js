@@ -1,3 +1,5 @@
+//-------------------------------------------------DATA----------------------------------------------------------
+
 let finances = [
   ['Jan-2010', 867884],
   ['Feb-2010', 984655],
@@ -88,46 +90,56 @@ let finances = [
 ];
 
 
-//console.log(finances[0][1])
-
-//global variables for use in loops/conditionals
-let totalProfits = 0;
-
-let greatestIncrease = 0;
-let greatestIncreaseMonth = "";
-//decrease defaults to high int to ensure it gets overidden in conditionals.
-let greatestDecrease = 9999999999999999999;
-let greatestDecreaseMonth = "";
 
 
-for (let i=0; i < finances.length; i++) {
+//---------------------------------------------------------------LOGIC-------------------------------------------------------
 
-  //console.log(finances[i][1])
 
-  //finds greatest increase in profits and stores key(months) and value(profits $) to a var
-  if (finances[i][1] > greatestIncrease) {
-    greatestIncreaseMonth = finances[i][0];
-    greatestIncrease = finances[i][1];
-  }
 
-  if (finances[i][1] < greatestDecrease) {
-    greatestDecreaseMonth = finances[i][0];
-    greatestDecrease = finances[i][1];
-  }
 
-  
-  totalProfits += finances[i][1];
+//function to calculate finances from a 2d array with [string-type, int-type] values.
+const calculateFinances = (array) => {
+
+  //variables for use in loops/conditionals
+  let totalProfits = 0;
+
+  let greatestIncrease = 0;
+  let greatestIncreaseMonth = "";
+  //decrease defaults to high int to ensure it gets overidden in conditionals.
+  let greatestDecrease = 9999999999999999999;
+  let greatestDecreaseMonth = "";
+
+
+  for (let i=0; i < finances.length; i++) {
+
+    //finds greatest increase in profits and stores key(months) and value(profits $) to a var
+    if (finances[i][1] > greatestIncrease) {
+      greatestIncreaseMonth = finances[i][0];
+      greatestIncrease = finances[i][1];
+    }
+
+     //finds greatest decrease in profits and stores key(months) and value(profits $) to a var
+    if (finances[i][1] < greatestDecrease) {
+      greatestDecreaseMonth = finances[i][0];
+      greatestDecrease = finances[i][1];
+    }
+
+    //loops through values adding them all together + saves total to a var
+    totalProfits += finances[i][1];
 
     if (i == (finances.length -1)) {
       //adds final month without disrupting above loop
       i += 1;
 
+      //function to log finances
+      const logFinances = () => {
+
       //purely semantic var declaration
       let totalMonths = i;
 
       //logs total months
-      console.log(`Total months: ${i}`);
-      console.log(`Total profits: $${totalProfits}`);
+      console.log(`Total Months: ${i}.`);
+      console.log(`Total Profits: $${totalProfits}.`);
 
 
       let averageChange = totalProfits / (totalMonths -1);
@@ -135,16 +147,23 @@ for (let i=0; i < finances.length; i++) {
       averageChange = Math.round(averageChange*100)/100;
       //I am getting a different result from the readme. 
       //I am however using the given calculation and online reading tells me this is correct
-      console.log(`The average change is ${averageChange}.`);
+      console.log(`Average Change: ${averageChange}.`);
 
       console.log(`Greatest Monthly Increase: ${greatestIncreaseMonth} ($${greatestIncrease}).`);
       console.log(`Greatest Monthly Decrease: ${greatestDecreaseMonth} ($${greatestDecrease}).`);
-    }
 
-    for (let j=0; j < finances.length; j++) {
-      //console.log(finances[i][j])
+
+      }
+    //calls nested log function
+    logFinances();
+
     }
-}
+  }
+};
+
+
+//global function calls
+calculateFinances(finances);
 
 
 
